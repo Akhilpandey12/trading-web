@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose =require('mongoose')
 
 const transactionSchema = new mongoose.Schema({
     userId:{type:mongoose.Schema.Types.ObjectId,ref:'user'},
@@ -9,4 +9,6 @@ const transactionSchema = new mongoose.Schema({
 
 },{timestamps:true})
 
-export default mongoose.model('Transaction',transactionSchema)
+ const Transaction =mongoose.model('Transaction',transactionSchema)
+
+ module.exports=Transaction;
