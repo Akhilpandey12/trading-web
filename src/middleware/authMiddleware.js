@@ -7,4 +7,10 @@ body('email').trim().notEmpty().isLength({min:10})
 
 ]
 
-module.exports={validator}
+const loginValidator=[
+body('username').trim().notEmpty(),
+body('password').trim().notEmpty().isLength({min:4})
+
+]
+
+module.exports={validator,loginValidator}
