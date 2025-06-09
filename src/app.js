@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
   res.send("Hey, server is working!");
 });
 
+app.post('/test',(req,res)=>{
+    res.send("heyyyyyyyyy")
+})
+
 
 app.use('/', authRoutes);
 
