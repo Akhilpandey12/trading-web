@@ -1,34 +1,36 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import axios from 'axios'
-import Api from './routes/api'
-import Register from './pages/Register'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import Navbar from './components/Navbar'
-
+import Register from './pages/Register';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Navbar from './components/Navbar';
+import LandingPage from './pages/LandingPage';
+import PrivateRoute from './components/PrivateRoute';
 
 const App = () => {
-
-
-
-
-
-
   return (
-<>
+    <BrowserRouter>
+      <Navbar />
 
-<BrowserRouter>
-   <Routes>
-      
-      <Route  path="/login" element={<Login/>}/>
-      <Route  path="/register" element={<Register/>}/>
-      <Route  path="/" element={<Dashboard/>}/>
+
+     
+      <Routes>
         
-   </Routes>
-</BrowserRouter>
-</>
-  )
+  <Route path='/user' element={
+    <PrivateRoute>
 
-}
-export default App
+     <Dashboard />
+    </PrivateRoute>
+  }/>
+         <Route path='/login' element={<Login />}/>
+         <Route path='/register' element={<Register />}/>
+        <Route path='/' element={<LandingPage />}/>
+       
+      
+   
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default App;

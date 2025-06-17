@@ -1,6 +1,7 @@
 
 const { validationResult } = require('express-validator');
 const { registerUser, loginUser } = require('../services/AuthService')
+const User =require('../models/user')
 
 
 // Register
@@ -34,17 +35,44 @@ const login = async (req, res) => {
     }
 
     try {
-        const {token ,username,userId}= await loginUser(req.body)
+        const { token, username, userId } = await loginUser(req.body)
 
-     
-       
-    res.cookie('token',token)
-     res.send("logged in",username,userId)
+
+
+      res.cookie('token', token, {
+    httpOnly: true,
+    sameSite: 'Lax',
+    secure: false, // true in production with HTTPS
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  });
+
+        res.send("logged in", username, userId)
     }
     catch (error) {
-        res.status(400).json({ error:error.message})
+        res.status(400).json({ error: error.message })
     }
-
-
 }
-module.exports = { register, login }
+
+
+//user after login
+const me =async (req,res)=>{
+try{
+const user= await User.findById(req.user.id).select('-password')
+res.json(user)
+}
+catch(error){res.status(500).json("server error")}
+}
+
+
+// logout
+
+const logout =(req,res)=>{
+    res.clearCookie('token',{
+        httpOnly:true,
+        sameSite:'Lax',
+        secure:false
+    });
+    res.json("logout successfully")
+}
+module.exports = { register, login ,me,logout}
+

@@ -1,11 +1,13 @@
 const jwt =require('jsonwebtoken')
 
-const aunthenticates =()=>{
+const aunthenticates =(req,res,next)=>{
 const token = req.cookies.token;
+
+
 
 if(!token) 
    {
-    return res.status(400).json.("unautherised acces")
+    return res.status(400).json("unauthorised acces")
    }
     try{
      const decode =jwt.verify(token,process.env.JWT_SECRET)
@@ -17,3 +19,4 @@ catch(error){
 }
 
 }
+module.exports={aunthenticates}

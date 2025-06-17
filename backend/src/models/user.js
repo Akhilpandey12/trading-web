@@ -20,8 +20,20 @@ const userSchema= new mongoose.Schema({
         unique:true,
         required:true,
         minlength:[4,"atleast 4 characters"]
-   }
+   },
 
+   balence :{
+type:Number,
+default:1000
+   },
+
+   players :[
+        {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Player'
+    }
+
+   ]
 })
 const User=mongoose.model('user',userSchema)
 

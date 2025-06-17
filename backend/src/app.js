@@ -13,22 +13,23 @@ const app = express();
 
 connectToDb();
 
+
+
+app.use(cors({
+  origin:'http://localhost:5173',
+  credentials:true
+}))
+
 app.use(cookieParser());
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.get('/', (req, res) => {
-  res.send("Hey, server is working!");
-});
-
-app.post('/test',(req,res)=>{
-    res.send("heyyyyyyyyy")
-})
 
 
-app.use('/', authRoutes);
+
+
+app.use('/api', authRoutes);
 
 
 const PORT = process.env.PORT || 3000;
