@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const cookieParser=require('cookie-parser')
 const connectToDb = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
+const playerRoutes=require('./routes/palyerRoutes')
 
 
 dotenv.config(); 
@@ -30,6 +31,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.use('/api', authRoutes);
+app.use('/api/players',playerRoutes)
 
 
 const PORT = process.env.PORT || 3000;
