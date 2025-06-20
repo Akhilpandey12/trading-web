@@ -17,15 +17,18 @@ const getAllPlayer = async (req, res) => {
 
 const buyPlayers = async (req, res) => {
     try {
-        const player = await service.buyPlayer(req.user.id, req.params.id);
-        res.json({ message: 'bought player' }, player)
+        // console.log("req-user",req.user)
+        // console.log("params",req.params)
+      const player = await service.buyPlayer(req.user.userId, req.params.id);
+      
+     res.json({ message: 'Bought player', player });
     }
-    catch (error) { res.status(400).json({ error: error.message }) }
+    catch (error) { res.status(400).json({error:error.message}) }
 }
 
 const sellPlayers = async (req, res) => {
     try {
-        const player = await service.sellPlayer(req.user.id, req.params.id);
+        const player = await service.sellPlayer(req.user.userId, req.params.id);
         res.json({ message: 'selled palyer' }, player)
     }
     catch (error) {
@@ -35,7 +38,9 @@ const sellPlayers = async (req, res) => {
 
 }
 const getMyPlayers = async (req, res) => {
-    const players = await service.getUserPlayers(req.user.id);
+    
+    const players = await service.getUserPlayers(req.user.userId);
+  
     res.json(players)
 }
 

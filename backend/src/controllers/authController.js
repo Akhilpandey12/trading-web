@@ -46,7 +46,9 @@ const login = async (req, res) => {
     maxAge: 7 * 24 * 60 * 60 * 1000
   });
 
-        res.send("logged in", username, userId)
+  
+
+        res.send({username,userId})
     }
     catch (error) {
         res.status(400).json({ error: error.message })

@@ -1,16 +1,23 @@
 const User = require('../models/user')
 const { hashPassword } = require('../utils/hash');
 const jwt = require('jsonwebtoken')
-const cookieParser=require('cookie-parser')
+const cookieParser = require('cookie-parser')
 const bcrypt = require('bcryptjs');
 
 //registerUser
-const registerUser = async ({ username, email, password }) => {
+const registerUser = async ({ username, email, password}) => {
   const existingUser = await User.findOne({ email })
   if (existingUser) throw new Error('email already in use')
 
   const hashed = await hashPassword(password)
-  const newUser = new User({ username, email, password: hashed })
+
+
+  const newUser = new User({
+    username,
+    email,
+    password: hashed,
+    // role: role === 'admin' ? 'admin' : 'user'
+  })
   await newUser.save()
 
   return { newUser, message: "user successesfully registerred" }

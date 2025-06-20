@@ -7,7 +7,7 @@ const User = require('../models/user')
 const addPlayer = async ({ name, team, price }) => {
     if (!name || !team || !price) throw new Error('missing field');
 
-    const player = new player({ name, team, price })
+    const player = new Player({ name, team, price })
     return await player.save();
 };
 
@@ -18,25 +18,34 @@ const getAllPlayers = async () => {
 
 }
 
-const buyPlayer = async () => {
-    const user = await User.findById(userId).populate('players');
-    const player = await Player.findById(playerId);
+const buyPlayer = async (userId,playerId) => {
+  const user = await User.findById(userId).populate('players');
+  if(!user) throw new Error('user not found')
 
-    if (!player) throw new error("player not found");
+   
 
-    if (user.playerId.some(p => p.id === player.id)) throw new error("already owned")
+     const player = await Player.findById(playerId);
+     if(!player) throw new Error('player not found')
 
-    if (user.balence < player.balence) throw new error("not enough balance")
+    if (!player) throw new Error('Player not found');
+//   if (user.players.some(p => p.id === player.id)) throw new Error('Already owned');
+  if (user.balance < player.price) throw new Error('Not enough balance');
 
-    user.players.push(player._id);
-    user.balence -= player.price
+   user.players.push(player._id);
 
-    await user.save();
-    return player;
+//    console.log("userb",user.balence)
+//    console.log("playerB",player.price)
+  user.balence=user.balence-player.price  
+// console.log("afterbuy",user.balence)
+ 
+
+  await user.save();
+
+  return player;
 }
 
 const sellPlayer = async (userId, playerId) => {
-    const user = await User.findById(userId).populate('player')
+    const user = await User.findById(userId).populate('players')
     const player = await Player.findById(playerId)
 
     if (!player) throw new Error('player not found')
@@ -53,8 +62,10 @@ const sellPlayer = async (userId, playerId) => {
 
 }
 
-const getUserPlayers = async () => {
+const getUserPlayers = async (userId) => {
+    
     const user = await User.findById(userId).populate('players')
+  if (!user) throw new Error('User not found');
     return user.players
 }
 
