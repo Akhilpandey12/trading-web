@@ -1,123 +1,85 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const LandingPage= () => {
-  const navigate=useNavigate();
-
+// Home.jsx
+const LandingPage = () => {
   return (
-
-
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
-      {/* Main Content Section */}
-
-
-      <motion.main
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8"
+    <div className="min-h-screen w-full bg-gradient-to-b from-black via-gray-900 to-black text-white">
+      
+      
+      /* Hero Section */
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="flex flex-col items-center justify-center h-screen px-6 text-center"
       >
-
-        <motion.div className='flex items-center justify-between'>
-          <motion.h1
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl font-extrabold mb-4 text-purple-400"
-          >
-            Welcome to Crick T
-          </motion.h1>
-          <div className='flex gap-3'> <motion.button onClick={()=>{navigate('/login')}} className='bg-green-400 px-3 py-1 rounded-sm'
-            initial={{ x: 20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 1.2, duration: 0.5 }}
-
-          >login</motion.button>
-            <motion.button onClick={()=>{navigate('/register')}} className='bg-red-500 p-1 px-2 rounded-sm'
-              initial={{ x: 20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: 1, duration: 0.5 }}
-            >sign up</motion.button></div>
-        </motion.div>
-
-        <p className="text-gray-300 mb-10 max-w-2xl">
-          Trade cricket players like stocks! Analyze market trends, track player performance, and grow your portfolio.
+        <h1 className="text-5xl sm:text-6xl font-extrabold tracking-wide mb-6">
+          Welcome to <span className="text-green-400">CRICK T</span>
+        </h1>
+        <p className="text-lg sm:text-xl max-w-2xl text-gray-300">
+          Your one-stop fantasy trading platform where cricket meets the stock market! Buy, sell, and trade cricket players based on performance, demand, and market trends. Experience the thrill of strategy, prediction, and competition.
         </p>
+      </motion.div>
 
-        {/* Dashboard Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Market Overview */}
+
+
+      /* Features Section */
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="px-6 py-20 bg-gradient-to-b from-gray-900 to-black text-center"
+      >
+        <h2 className="text-4xl font-bold mb-10">Why CRICK T?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7 }}
-
-            className="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
+            whileHover={{ scale: 1.05 }}
+            className="bg-gray-800 p-6 rounded-xl shadow-lg"
           >
-            <h2 className="text-xl font-semibold mb-4">📈 Player Market Overview</h2>
-            <ul className="space-y-2">
-              <li className="flex justify-between">
-                <span>Virat Kohli</span>
-                <span className="text-green-400">+0.2%</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Rohit Sharma</span>
-                <span className="text-red-400">10.1%</span>
-              </li>
-              <li className="flex justify-between">
-                <span>MS Dhoni</span>
-                <span className="text-green-400">1.8%</span>
-              </li>
-            </ul>
+            <h3 className="text-2xl font-semibold mb-3 text-green-400">Real-Time Player Market</h3>
+            <p>Track live performance and popularity of players to buy or sell at the right time. Dynamic pricing keeps the market competitive.</p>
           </motion.div>
-
-          {/* Portfolio */}
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
+            whileHover={{ scale: 1.05 }}
+            className="bg-gray-800 p-6 rounded-xl shadow-lg"
           >
-            <h2 className="text-xl font-semibold mb-4">💼 Your Portfolio</h2>
-            <ul className="space-y-2">
-              <li className="flex justify-between">
-                <span>KL Rahul</span>
-                <span>25 Shares</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Hardik Pandya</span>
-                <span>15 Shares</span>
-              </li>
-              <li className="flex justify-between">
-                <span>Shubman Gill</span>
-                <span>30 Shares</span>
-              </li>
-            </ul>
+            <h3 className="text-2xl font-semibold mb-3 text-green-400">Strategic Trading</h3>
+            <p>Just like stocks, you need timing, analysis, and smart moves. Build your dream squad and maximize your portfolio value.</p>
           </motion.div>
-
-          {/* Featured Player */}
           <motion.div
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-            className="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
+            whileHover={{ scale: 1.05 }}
+            className="bg-gray-800 p-6 rounded-xl shadow-lg"
           >
-            <h2 className="text-xl font-semibold mb-4">🌟 Featured Player</h2>
-            <div className="flex items-center space-x-4">
-              <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center font-bold text-xl">
-                VK
-              </div>
-              <div>
-                <p className="font-semibold">Virat Kohli</p>
-                <p className="text-sm text-gray-400">Current Price: 49</p>
-              </div>
-            </div>
+            <h3 className="text-2xl font-semibold mb-3 text-green-400">Compete with Others</h3>
+            <p>Join tournaments, compete on leaderboards, and show off your cricket IQ. Be the best manager in the fantasy trading world.</p>
           </motion.div>
         </div>
-      </motion.main>
+      </motion.div>
+
+
+      /* CTA Section */
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="px-6 py-16 text-center bg-gradient-to-b from-black to-gray-900"
+      >
+        <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Play the Cricket Stock Market?</h2>
+        <p className="text-lg max-w-xl mx-auto text-gray-300 mb-6">
+          Sign up now to start building your fantasy team, trading your favorite players, and rising to the top of the leaderboard.
+        </p>
+        <div className="flex justify-center gap-4">
+          <a href="/register">
+            <button className="bg-green-500 px-6 py-3 text-lg rounded-xl font-semibold hover:bg-green-400 transition">Get Started</button>
+          </a>
+          <a href="/market">
+            <button className="border border-green-500 px-6 py-3 text-lg rounded-xl font-semibold hover:bg-green-500 hover:text-black transition">Explore Marketplace</button>
+          </a>
+        </div>
+      </motion.div>
     </div>
   );
 };
-
-export default LandingPage
+export default LandingPage;

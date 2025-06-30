@@ -1,157 +1,110 @@
-// import React from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import { motion } from 'framer-motion';
-
-// const Dashboard = () => {
-//   const navigate=useNavigate();
-
-//   return (
-
-
-//     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white">
-//       {/* Main Content Section */}
-
-
-//       <motion.main
-//         initial={{ opacity: 0 }}
-//         animate={{ opacity: 1 }}
-//         transition={{ duration: 0.8 }}
-//         className="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8"
-//       >
-
-//         <motion.div className='flex items-center justify-between'>
-//           <motion.h1
-//             initial={{ y: -20, opacity: 0 }}
-//             animate={{ y: 0, opacity: 1 }}
-//             transition={{ duration: 0.6 }}
-//             className="text-4xl font-extrabold mb-4 text-purple-400"
-//           >
-//             Welcome to Crick T
-//           </motion.h1>
-//           <div className='flex gap-3'> <motion.button onClick={()=>{navigate('/login')}} className='bg-green-400 px-3 py-1 rounded-sm'
-//             initial={{ x: 20, opacity: 0 }}
-//             animate={{ x: 0, opacity: 1 }}
-//             transition={{ delay: 1.2, duration: 0.5 }}
-
-//           >login</motion.button>
-//             <motion.button onClick={()=>{navigate('/register')}} className='bg-red-500 p-1 px-2 rounded-sm'
-//               initial={{ x: 20, opacity: 0 }}
-//               animate={{ x: 0, opacity: 1 }}
-//               transition={{ delay: 1, duration: 0.5 }}
-//             >sign up</motion.button></div>
-//         </motion.div>
-
-//         <p className="text-gray-300 mb-10 max-w-2xl">
-//           Trade cricket players like stocks! Analyze market trends, track player performance, and grow your portfolio.
-//         </p>
-
-//         {/* Dashboard Grid */}
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-//           {/* Market Overview */}
-//           <motion.div
-//             initial={{ y: 50, opacity: 0 }}
-//             animate={{ y: 0, opacity: 1 }}
-//             transition={{ duration: 0.7 }}
-
-//             className="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
-//           >
-//             <h2 className="text-xl font-semibold mb-4">📈 Player Market Overview</h2>
-//             <ul className="space-y-2">
-//               <li className="flex justify-between">
-//                 <span>Virat Kohli</span>
-//                 <span className="text-green-400">+0.2%</span>
-//               </li>
-//               <li className="flex justify-between">
-//                 <span>Rohit Sharma</span>
-//                 <span className="text-red-400">10.1%</span>
-//               </li>
-//               <li className="flex justify-between">
-//                 <span>MS Dhoni</span>
-//                 <span className="text-green-400">1.8%</span>
-//               </li>
-//             </ul>
-//           </motion.div>
-
-//           {/* Portfolio */}
-//           <motion.div
-//             initial={{ y: 50, opacity: 0 }}
-//             animate={{ y: 0, opacity: 1 }}
-//             transition={{ duration: 0.7, delay: 0.2 }}
-//             className="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
-//           >
-//             <h2 className="text-xl font-semibold mb-4">💼 Your Portfolio</h2>
-//             <ul className="space-y-2">
-//               <li className="flex justify-between">
-//                 <span>KL Rahul</span>
-//                 <span>25 Shares</span>
-//               </li>
-//               <li className="flex justify-between">
-//                 <span>Hardik Pandya</span>
-//                 <span>15 Shares</span>
-//               </li>
-//               <li className="flex justify-between">
-//                 <span>Shubman Gill</span>
-//                 <span>30 Shares</span>
-//               </li>
-//             </ul>
-//           </motion.div>
-
-//           {/* Featured Player */}
-//           <motion.div
-//             initial={{ y: 50, opacity: 0 }}
-//             animate={{ y: 0, opacity: 1 }}
-//             transition={{ duration: 0.7, delay: 0.4 }}
-//             className="bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition"
-//           >
-//             <h2 className="text-xl font-semibold mb-4">🌟 Featured Player</h2>
-//             <div className="flex items-center space-x-4">
-//               <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center font-bold text-xl">
-//                 VK
-//               </div>
-//               <div>
-//                 <p className="font-semibold">Virat Kohli</p>
-//                 <p className="text-sm text-gray-400">Current Price: 49</p>
-//               </div>
-//             </div>
-//           </motion.div>
-//         </div>
-//       </motion.main>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import API from '../utils/axios';
+import { useNavigate } from 'react-router-dom';
 
-const Dashboard = () => {
-  const [user, setUser] = useState(null);
+const UserDashboard = () => {
+    const [players, setPlayers]=useState([]);
+    const[user, setUser] =useState(null);
+    const [message, setMessage] =useState('')
+    const navigate =useNavigate();
 
-  const fetchUser = async () => {
-    try {
-      const res = await API.get('/me');
-      setUser(res.data);
-    } catch (err) {
-      setUser(null);
-    }
-  };
+    useEffect(() => {
+     const fetchData=async ()=>{
+      try {
+        const userRes=await API.get('/me');
+        const playerRes=await API.get('/players');
+        setUser(userRes.data);
+        setPlayers(playerRes.data);
+      } catch (error) {
+        console.log(error)
+        navigate('/login')
+      }
+     };
 
-  useEffect(() => {
-    fetchUser();
-  }, []);
+    fetchData();
+    }, [navigate]);
 
-  return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Dashboard</h1>
-      {user ? (
-        <div>Welcome, <b>{user.email}</b></div>
-      ) : (
-        <div>hey i am herr.</div>
-      )}
-    </div>
-  );
+    if (!user) return <div className="text-white p-6">Loading user data...</div>;
+
+    const handleBuyClick = (playerId) => {
+      navigate(`/buy/${playerId}`);
+    };
+
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-black via-gray-900 to-black text-white px-6 py-7">
+        <motion.div className='text-green-400'
+        initial={{opacity :0,x:200}}
+        animate={{opacity:1 ,x:500}}
+        ><h1> B {user.balence} </h1>
+        </motion.div>
+
+        <motion.h1 
+          initial={{ opacity: 0, y: -20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.5 }}
+          className="text-4xl font-bold text-center mb-10"
+        >
+          Hey Welcome {user.username}
+        </motion.h1>
+
+
+        /* All Players */
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 0.3 }}
+        >
+          <h2 className="text-2xl font-semibold mb-4">All players</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {players.map(player => (
+              <div key={player._id} className="bg-gray-800 rounded-xl p-4 shadow-md">
+                <h3 className="text-xl font-bold">{player.name}</h3>
+                <p className="text-sm">Team: {player.team}</p>
+                <p className="text-sm mb-2">Price: ₹{player.price}</p>
+                <button
+                  onClick={() => handleBuyClick(player._id)}
+                  className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-md text-white font-semibold"
+                >
+                  Buy
+                </button>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+
+
+        /* My Players */
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ delay: 0.6 }}
+          className="mt-16"
+        >
+          <h2 className="text-2xl font-semibold mb-4">Your Owned Players</h2>
+
+          {user.players && user.players.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {user.players.map(player => (
+                <motion.div 
+                  key={player._id}
+                  whileHover={{ scale: 1.05 }} 
+                  className="bg-gray-700 p-4 rounded-xl shadow-lg"
+                >
+                  <h3 className="text-xl font-semibold text-yellow-400">{player.name}</h3>
+                  <p className="text-gray-300">Price: ₹{player.price}</p>
+                  <button 
+                    className="mt-3 bg-red-500 px-4 py-2 rounded hover:bg-red-400 transition"
+                  >Sell</button>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-400">You haven't bought any players yet.</p>
+          )}
+        </motion.div>
+      </div>
+    );
 };
 
-export default Dashboard;
-
+export default UserDashboard;
