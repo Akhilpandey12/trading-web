@@ -59,8 +59,9 @@ const login = async (req, res) => {
 //user after login
 const me =async (req,res)=>{
 try{
-const user= await User.findById(req.user.id).select('-password')
+const user= await User.findById(req.user.userId).select('-password')
 res.json(user)
+
 }
 catch(error){res.status(500).json("server error")}
 }

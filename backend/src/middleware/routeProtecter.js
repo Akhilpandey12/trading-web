@@ -1,6 +1,8 @@
 const jwt =require('jsonwebtoken')
 const User= require('../models/user')
 
+
+// it aunthenticats the routes
 const aunthenticates =(req,res,next)=>{
 const token = req.cookies.token;
 if(!token) 
